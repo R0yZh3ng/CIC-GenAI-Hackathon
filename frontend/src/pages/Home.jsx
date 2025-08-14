@@ -20,13 +20,15 @@ function Home() {
 					<div className="font-serif font-black text-[clamp(2.5rem,5vw,7rem)] text-[#171717] tracking-tight">LE-</div>
 					<div className="font-serif font-black text-[clamp(3rem,6vw,8rem)] text-[#171717] tracking-tight -mt-2">CRUITER.AI</div>
 				</div>
-        <div className="flex flex-col items-center py-10 sm:py-12  md:py-14 lg:py-16">
-				<p className="mt-8 sm:mt-10 md:mt-12 text-[clamp(1.125rem,2.5vw,2.25rem)] text-[#1f1f1f] font-medium leading-relaxed">
-					Practice behavioral and technical interviews.
-				</p>
-					<div className="bg-[#2c2c2c] hover:bg-[#444444] rounded-[5px] m-10 text-[#ffffff]" style={{padding: '10px 40px', minWidth: '500px'}}>
-           <p className="text-white text-center text-lg font-medium">Start Interview</p>
-				</div>
+        <div className="flex flex-col items-center py-10 sm:py-12  md:py-14 lg:py-16 ">
+          <p className="mt-8 sm:mt-10 md:mt-12 text-[clamp(1.125rem,2.5vw,2.25rem)] text-[#1f1f1f] font-medium leading-relaxed">
+            Practice behavioral and technical interviews.
+          </p>
+					<Link to="/behavior">
+						<div className="bg-[#2c2c2c] hover:bg-[#444444] rounded-[5px] text-[#ffffff]" style={{padding: '5px 40px', width: '35vw', margin: '20px 0px 20px', marginTop: '20px'}}>
+							<p className="text-white text-center text-lg font-medium">Start Interview</p>
+						</div>
+					</Link>
         </div>
 			</div>
 		</div>
