@@ -1,6 +1,4 @@
-import openai
 from typing import List, Dict, Any, Optional
-from config import settings
 import json
 import logging
 import boto3
@@ -13,11 +11,8 @@ logger = logging.getLogger(__name__)
 
 class AIService:
     def __init__(self):
-        # Initialize OpenAI client
-        self.client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
-        
         # Initialize AWS Bedrock client
-        os.environ["AWS_PROFILE"] = "default"
+        os.environ["AWS_PROFILE"] = "bokchoy"
         bedrock_client = boto3.client('bedrock-runtime', region_name='us-west-2')
         self.bedrock_llm = BedrockLLM(
             model_id="amazon.titan-tg1-large",
