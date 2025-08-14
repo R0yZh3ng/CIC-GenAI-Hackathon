@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from rag_interview_chatbot import RAGInterviewChatbot
@@ -47,19 +47,36 @@ async def get_question(request: QuestionRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/evaluate")
-async def evaluate_answer(request: AnswerRequest):
+async def evaluate_answer(request: Request):
     """Evaluate user answer"""
     try:
-        if request.section == "technical":
-            if request.question_data:
-                chatbot.current_question_data = request.question_data
-            feedback = await chatbot.evaluate_technical_answer(request.answer)
+        # Get raw body for debugging
+        body = await request.body()
+        print(f"Raw request body: {body}")
+        
+        # Parse JSON
+        data = json.loads(body)
+        print(f"Parsed data: {data}")
+        
+        # Validate required fields
+        if 'section' not in data or 'answer' not in data:
+            raise HTTPException(status_code=422, detail="Missing required fields: section and answer")
+        
+        section = data['section']
+        answer = data['answer']
+        question_data = data.get('question_data')
+        
+        print(f"Section: {section}, Answer: {answer[:50]}...")
+        if section == "technical":
+            if question_data:
+                chatbot.current_question_data = question_data
+            feedback = await chatbot.evaluate_technical_answer(answer)
         else:
-            feedback = await chatbot.evaluate_behavioral_answer(request.answer)
+            feedback = await chatbot.evaluate_behavioral_answer(answer)
         
         return {
             "feedback": feedback,
-            "section": request.section
+            "section": section
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

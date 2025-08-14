@@ -57,21 +57,22 @@ class RAGInterviewChatbot:
         """Ask a technical question from CSV data"""
         question_data = self.get_random_question()
         
-        prompt = f"""You are a senior software engineer conducting a technical interview. 
+        prompt = f"""You are a senior software engineer conducting a technical coding interview. 
 
-Use this question from our database:
-QUESTION: {question_data['question']}
-EXPECTED ANSWER: {question_data['answer']}
+Use this LeetCode-style problem from our database:
+PROBLEM: {question_data['question']}
+EXPECTED SOLUTION: {question_data['answer']}
 DIFFICULTY: {question_data['difficulty']}
 TOPIC: {question_data['topic']}
 
-Present this question to the candidate in this format:
-TECHNICAL QUESTION: [Rephrase the question naturally]
+Present this as a CODING PROBLEM in this format:
+CODING PROBLEM: [Present the problem clearly with examples and constraints]
 DIFFICULTY: {question_data['difficulty']}
 TOPIC: {question_data['topic']}
-HINT: [Provide a helpful hint about the approach]
+EXAMPLE: [Provide a clear input/output example]
+CONSTRAINTS: [List any constraints]
 
-Present the question now:"""
+This should be a hands-on coding problem that requires writing actual code, not theoretical questions. Present the problem now:"""
         
         self.waiting_for_answer = True
         self.current_question_data = question_data
@@ -79,25 +80,28 @@ Present the question now:"""
     
     async def evaluate_technical_answer(self, user_answer: str) -> str:
         """Evaluate the technical answer against CSV data"""
-        prompt = f"""You are evaluating a technical interview answer.
+        prompt = f"""You are evaluating a LeetCode-style coding solution.
 
-ORIGINAL QUESTION: {self.current_question_data['question']}
-EXPECTED ANSWER: {self.current_question_data['answer']}
+ORIGINAL PROBLEM: {self.current_question_data['question']}
+EXPECTED SOLUTION: {self.current_question_data['answer']}
 DIFFICULTY: {self.current_question_data['difficulty']}
 TOPIC: {self.current_question_data['topic']}
 
-CANDIDATE'S ANSWER: {user_answer}
+CANDIDATE'S CODE: {user_answer}
 
-Compare the candidate's answer with the expected answer and provide feedback:
+Evaluate this code solution and provide feedback:
 
-FEEDBACK:
-✓ CORRECTNESS: [How accurate is their answer compared to expected?]
-⚠ AREAS FOR IMPROVEMENT: [What they missed or got wrong]
-💡 SUGGESTIONS: [How to improve their answer]
-📚 EXPECTED APPROACH: {self.current_question_data['answer']}
+CODE EVALUATION:
+✅ CORRECTNESS: [Does the code solve the problem correctly?]
+⏱️ TIME COMPLEXITY: [What's the time complexity? Is it optimal?]
+💾 SPACE COMPLEXITY: [What's the space complexity?]
+🔧 CODE QUALITY: [Is the code clean, readable, and well-structured?]
+⚠️ ISSUES: [Any bugs, edge cases missed, or improvements needed?]
+💡 OPTIMIZATION: [How can this be optimized?]
+📚 EXPECTED SOLUTION: {self.current_question_data['answer']}
 SCORE: [X/10]
 
-Evaluate now:"""
+Evaluate the code now:"""
         
         self.waiting_for_answer = False
         return await self.ai_service.chat_with_bedrock(prompt)
@@ -114,7 +118,9 @@ STAR REMINDER: Please structure your answer using Situation, Task, Action, Resul
 Ask a question now:"""
         
         self.waiting_for_answer = True
-        return await self.ai_service.chat_with_bedrock(prompt)
+        question = await self.ai_service.chat_with_bedrock(prompt)
+        self.current_question = question  # Store the question for evaluation
+        return question
     
     async def evaluate_behavioral_answer(self, user_answer: str) -> str:
         """Evaluate the behavioral answer"""
