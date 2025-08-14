@@ -3,7 +3,9 @@ import Navigation from './components/Navigation';
 import Home from './pages/Home';
 import Past from './pages/Past';
 import Behavior from './pages/Behavior';
+import BehaviorResult from './pages/BehaviorResult';
 import Technical from './pages/Technical';
+import TechnicalResult from './pages/TechnicalResult';
 
 function App() {
   return (
@@ -15,7 +17,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/past" element={<Past />} />
             <Route path="/behavior" element={<Behavior />} />
+            <Route path="/behavior-result" element={<BehaviorResult />} />
             <Route path="/technical" element={<Technical />} />
+            <Route path="/technical-result" element={<TechnicalResult />} />
           </Routes>
         </div>
       </div>

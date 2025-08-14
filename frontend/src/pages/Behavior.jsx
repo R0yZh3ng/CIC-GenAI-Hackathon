@@ -74,13 +74,48 @@ function Behavior() {
     // Don't navigate automatically - just stop recording
   };
   
-  const handleSubmit = () => {
-    // TODO: Send response to backend
-    console.log('Response to send:', response);
-    // Here we'll add the API call to send the response to the backend
-    
-    // Navigate to BehaviorResult page after submitting
-    navigate('/behavior-result', { state: { response: response } });
+  const handleSubmit = async () => {
+    try {
+      // Show loading state (optional)
+      console.log('Sending response to backend:', response);
+      
+      // TODO: Replace with your actual backend endpoint
+      const apiResponse = await fetch('/api/behavioral-feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          question: question,
+          response: response
+        })
+      });
+      
+      if (!apiResponse.ok) {
+        throw new Error('Failed to get feedback');
+      }
+      
+      const data = await apiResponse.json();
+      const feedback = data.feedback; // Assuming your backend returns { feedback: "string" }
+      
+      // Navigate to BehaviorResult page with both response and feedback
+      navigate('/behavior-result', { 
+        state: { 
+          response: response, 
+          feedback: feedback 
+        } 
+      });
+      
+    } catch (error) {
+      console.error('Error getting feedback:', error);
+      // Handle error - maybe show a message or navigate with just the response
+      navigate('/behavior-result', { 
+        state: { 
+          response: response, 
+          feedback: 'Error: Could not get feedback from server' 
+        } 
+      });
+    }
   };
 
   return (
