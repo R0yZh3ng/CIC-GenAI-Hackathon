@@ -3,13 +3,46 @@ from typing import List, Dict, Any, Optional
 from config import settings
 import json
 import logging
+import boto3
+import os
+from langchain_aws import BedrockLLM
+from langchain.prompts import PromptTemplate
 
 logger = logging.getLogger(__name__)
 
 
 class AIService:
     def __init__(self):
+        # Initialize OpenAI client
         self.client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
+        
+        # Initialize AWS Bedrock client
+        os.environ["AWS_PROFILE"] = "default"
+        bedrock_client = boto3.client('bedrock-runtime', region_name='us-west-2')
+        self.bedrock_llm = BedrockLLM(
+            model_id="amazon.titan-tg1-large",
+            client=bedrock_client,
+            model_kwargs={"temperature": 0.5, "maxTokenCount": 4000}
+        )
+    
+    async def chat_with_bedrock(self, input_text: str) -> str:
+        """Chat with Bedrock using the OpenAI GPT model"""
+        try:
+            prompt_template = """Human: {input_text}
+
+Assistant: I'll help you with that question."""
+            
+            prompt = PromptTemplate(
+                input_variables=["input_text"],
+                template=prompt_template
+            )
+            
+            chain = prompt | self.bedrock_llm
+            response = chain.invoke({"input_text": input_text})
+            return str(response)
+        except Exception as e:
+            logger.error(f"Bedrock error: {e}")
+            return f"Error: {str(e)}"
     
     async def evaluate_behavioral_response(self, question: str, response: str, key_points: List[str]) -> Dict[str, Any]:
         """

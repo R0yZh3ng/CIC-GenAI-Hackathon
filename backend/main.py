@@ -45,6 +45,17 @@ async def root():
     return {"message": "AI Interviewer API is running"}
 
 
+@app.post("/chat/")
+async def chat_with_bedrock(message: str):
+    """Chat with Bedrock OpenAI GPT model"""
+    try:
+        response = await interview_manager.ai_service.chat_with_bedrock(message)
+        return {"response": response}
+    except Exception as e:
+        logger.error(f"Chat error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # Interview Management Endpoints
 @app.post("/interviews/", response_model=InterviewResponse)
 async def create_interview(
