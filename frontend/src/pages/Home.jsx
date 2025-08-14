@@ -1,61 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Lebron from '../assets/Lebron.png';
 
 function Home() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-xl p-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">
-              Welcome to Our Platform
-            </h1>
-            
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg p-6 text-white">
-                <h2 className="text-2xl font-semibold mb-4">Past Analysis</h2>
-                <p className="text-blue-100 mb-4">
-                  Explore historical data and trends to understand patterns and insights from the past.
-                </p>
-                <Link 
-                  to="/past" 
-                  className="inline-block bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
-                >
-                  View Past Data
-                </Link>
-              </div>
-              
-              <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg p-6 text-white">
-                <h2 className="text-2xl font-semibold mb-4">Behavior Analysis</h2>
-                <p className="text-green-100 mb-4">
-                  Analyze user behavior patterns and interactions to optimize user experience.
-                </p>
-                <Link 
-                  to="/behavior" 
-                  className="inline-block bg-white text-green-600 px-4 py-2 rounded-lg font-semibold hover:bg-green-50 transition-colors"
-                >
-                  Analyze Behavior
-                </Link>
-              </div>
-            </div>
-            
-            <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg p-6 text-white">
-              <h2 className="text-2xl font-semibold mb-4">Technical Insights</h2>
-              <p className="text-purple-100 mb-4">
-                Dive deep into technical metrics, performance data, and system analytics.
-              </p>
-              <Link 
-                to="/technical" 
-                className="inline-block bg-white text-purple-600 px-4 py-2 rounded-lg font-semibold hover:bg-purple-50 transition-colors"
-              >
-                Technical Dashboard
-              </Link>
-            </div>
-          </div>
+	return (
+		<div className="h-full w-full m-0 p-0 bg-[#F9F4F1] flex overflow-hidden">
+			{/* Left: Lebron image anchored to bottom */}
+			<div className="flex-1 h-full overflow-visible flex items-end justify-center">
+				<img
+					src={Lebron}
+					alt="LeBron James"
+					className="w-[80%] sm:w-[75%] md:w-[70%] lg:w-[65%] xl:w-[60%] h-auto object-contain object-bottom select-none pointer-events-none translate-y-[1px]"
+				/>
+			</div>
+
+			{/* Right: Title, subtitle, button */}
+			<div className="flex-1 h-full flex flex-col justify-center items-start px-8 sm:px-12 md:px-16 lg:px-20">
+				<div className="leading-tight">
+					<div className="font-serif font-black text-[clamp(2.5rem,5vw,7rem)] text-[#171717] tracking-tight">LE-</div>
+					<div className="font-serif font-black text-[clamp(3rem,6vw,8rem)] text-[#171717] tracking-tight -mt-2">CRUITER.AI</div>
+				</div>
+        <div className="flex flex-col items-center py-10 sm:py-12  md:py-14 lg:py-16">
+				<p className="mt-8 sm:mt-10 md:mt-12 text-[clamp(1.125rem,2.5vw,2.25rem)] text-[#1f1f1f] font-medium leading-relaxed">
+					Practice behavioral and technical interviews.
+				</p>
+					<div className="bg-[#2c2c2c] hover:bg-[#444444] rounded-[5px] m-10 text-[#ffffff]" style={{padding: '10px 40px', minWidth: '500px'}}>
+           <p className="text-white text-center text-lg font-medium">Start Interview</p>
+				</div>
         </div>
-      </div>
-    </div>
-  );
+			</div>
+		</div>
+	);
 }
 
 export default Home;

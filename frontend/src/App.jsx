@@ -8,14 +8,16 @@ import Technical from './pages/Technical';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen">
+      <div className="h-screen w-full flex flex-col m-0 p-0">
         <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/past" element={<Past />} />
-          <Route path="/behavior" element={<Behavior />} />
-          <Route path="/technical" element={<Technical />} />
-        </Routes>
+        <div className="flex-1 overflow-hidden m-0 p-0">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/past" element={<Past />} />
+            <Route path="/behavior" element={<Behavior />} />
+            <Route path="/technical" element={<Technical />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );
