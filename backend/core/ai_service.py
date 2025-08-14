@@ -75,14 +75,8 @@ Assistant: I'll help you with that question."""
             }}
             """
             
-            response = await self.client.chat.completions.acreate(
-                model="gpt-4",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.3,
-                max_tokens=1000
-            )
-            
-            result = json.loads(response.choices[0].message.content)
+            bedrock_response = await self.chat_with_bedrock(prompt)
+            result = json.loads(bedrock_response)
             return result
             
         except Exception as e:
@@ -117,14 +111,8 @@ Assistant: I'll help you with that question."""
             Return as a JSON array of strings.
             """
             
-            response = await self.client.chat.completions.acreate(
-                model="gpt-4",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.7,
-                max_tokens=500
-            )
-            
-            follow_ups = json.loads(response.choices[0].message.content)
+            bedrock_response = await self.chat_with_bedrock(prompt)
+            follow_ups = json.loads(bedrock_response)
             return follow_ups if isinstance(follow_ups, list) else []
             
         except Exception as e:
@@ -164,14 +152,8 @@ Assistant: I'll help you with that question."""
             }}
             """
             
-            response = await self.client.chat.completions.acreate(
-                model="gpt-4",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.2,
-                max_tokens=1000
-            )
-            
-            result = json.loads(response.choices[0].message.content)
+            bedrock_response = await self.chat_with_bedrock(prompt)
+            result = json.loads(bedrock_response)
             return result
             
         except Exception as e:
@@ -223,14 +205,8 @@ Assistant: I'll help you with that question."""
             }}
             """
             
-            response = await self.client.chat.completions.acreate(
-                model="gpt-4",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.3,
-                max_tokens=1000
-            )
-            
-            result = json.loads(response.choices[0].message.content)
+            bedrock_response = await self.chat_with_bedrock(prompt)
+            result = json.loads(bedrock_response)
             return result
             
         except Exception as e:
