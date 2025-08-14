@@ -1,0 +1,6 @@
+Question,Answer,Difficulty,Topic
+"What is the time complexity of binary search?","O(log n)","Medium","Algorithms"
+"Explain how a hash table works","Uses hash function to map keys to array indices for O(1) average lookup","Easy","Data Structures"
+"What is the difference between a stack and a queue?","Stack is LIFO (Last In First Out), Queue is FIFO (First In First Out)","Easy","Data Structures"
+"How do you reverse a linked list?","Iterate through list, reverse pointers by keeping track of previous, current, and next nodes","Medium","Algorithms"
+"What is Big O notation?","Mathematical notation to describe the upper bound of algorithm complexity","Easy","Algorithms"

@@ -12,29 +12,37 @@ logger = logging.getLogger(__name__)
 class AIService:
     def __init__(self):
         # Initialize AWS Bedrock client
-        os.environ["AWS_PROFILE"] = "bokchoy"
+        os.environ["AWS_PROFILE"] = "default"
         bedrock_client = boto3.client('bedrock-runtime', region_name='us-west-2')
-        self.bedrock_llm = BedrockLLM(
-            model_id="amazon.titan-tg1-large",
-            client=bedrock_client,
-            model_kwargs={"temperature": 0.5, "maxTokenCount": 4000}
-        )
+        self.bedrock_client = bedrock_client
     
     async def chat_with_bedrock(self, input_text: str) -> str:
-        """Chat with Bedrock using the OpenAI GPT model"""
+        """Chat with Bedrock using OpenAI GPT model"""
         try:
-            prompt_template = """Human: {input_text}
-
-Assistant: I'll help you with that question."""
+            body = {
+                "messages": [
+                    {"role": "user", "content": input_text}
+                ],
+                "temperature": 0.5,
+                "max_tokens": 4000
+            }
             
-            prompt = PromptTemplate(
-                input_variables=["input_text"],
-                template=prompt_template
+            body = {
+                "anthropic_version": "bedrock-2023-05-31",
+                "max_tokens": 4000,
+                "temperature": 0.5,
+                "messages": [
+                    {"role": "user", "content": input_text}
+                ]
+            }
+            
+            response = self.bedrock_client.invoke_model(
+                modelId="anthropic.claude-3-sonnet-20240229-v1:0",
+                body=json.dumps(body)
             )
             
-            chain = prompt | self.bedrock_llm
-            response = chain.invoke({"input_text": input_text})
-            return str(response)
+            response_body = json.loads(response['body'].read())
+            return response_body['content'][0]['text']
         except Exception as e:
             logger.error(f"Bedrock error: {e}")
             return f"Error: {str(e)}"
@@ -45,7 +53,7 @@ Assistant: I'll help you with that question."""
         """
         try:
             prompt = f"""
-            You are an expert interviewer evaluating a behavioral response.
+            You are an expert interviewer evaluating a behavioral response. The user response is being transcribed from an audio file. Make reasonable deductions when you see pausing words, assume a 5 second pause with every umm
             
             Question: {question}
             Key points to evaluate: {', '.join(key_points)}
@@ -58,6 +66,8 @@ Assistant: I'll help you with that question."""
             3. STAR method usage (Situation, Task, Action, Result)
             4. Communication clarity
             5. Professionalism
+            6. extensive pauses in the speech
+            
             
             Provide your evaluation in the following JSON format:
             {{
@@ -68,6 +78,9 @@ Assistant: I'll help you with that question."""
                 "key_points_covered": ["<point1>", "<point2>"],
                 "missing_points": ["<missing_point1>", "<missing_point2>"]
             }}
+            
+            provide an plan to improve after evaluation is complete 
+            
             """
             
             bedrock_response = await self.chat_with_bedrock(prompt)
