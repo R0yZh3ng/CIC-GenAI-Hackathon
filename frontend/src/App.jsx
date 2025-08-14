@@ -11,7 +11,6 @@ function App() {
   return (
     <Router>
       <div className="h-screen w-full flex flex-col m-0 p-0">
-        <Navigation />
         <div className="flex-1 overflow-hidden m-0 p-0">
           <Routes>
             <Route path="/" element={<Home />} />

@@ -7,49 +7,126 @@ function BehaviorResult() {
   const response = location.state?.response || 'No response recorded';
   const feedback = location.state?.feedback || 'No feedback received';
 
-  const handleSubmit = () => {
-    // TODO: Send response to backend
-    console.log('Response to send:', response);
-    // Here we'll add the API call to send the response to the backend
-  };
-
   const handleBack = () => {
     navigate('/behavior');
   };
 
   return (
-    <div className="h-full w-full bg-[#F9F4F1] flex flex-col items-center justify-center" style={{padding: '40px'}}>
-      <div className="max-w-4xl w-full" style={{paddingTop: '40px'}}>
-        <h1 className="text-4xl font-bold text-center text-[#171717]" style={{marginBottom: '40px'}}>Review Your Response</h1>
+    <div 
+      className="h-full w-full flex flex-col items-center justify-center" 
+      style={{ backgroundColor: '#FFFFFF', padding: '20px', color: '#000000', fontFamily: 'sans-serif' }}
+    >
+      <div className="max-w-3xl w-full" style={{ paddingTop: '20px' }}>
         
-        <div className="bg-white rounded-lg p-6 shadow-md" style={{marginBottom: '40px'}}>
-          <h2 className="text-xl font-semibold text-[#1f1f1f] mb-4">Your Recorded Response:</h2>
+        {/* Title */}
+        <h1 
+          className="text-3xl font-bold text-center" 
+          style={{ 
+            marginBottom: '24px', 
+            color: '#552583', 
+            borderBottom: '3px solid #FDB927', 
+            display: 'inline-block', 
+            paddingBottom: '6px'
+          }}
+        >
+          Review Your Response
+        </h1>
+
+        {/* Your Recorded Response */}
+        <div 
+          className="shadow-md" 
+          style={{ 
+            marginBottom: '24px', 
+            backgroundColor: '#FDB927', 
+            color: '#000000',
+            fontWeight: 500,
+            padding: '16px',
+            borderRadius: '10px',
+            border: '2px solid #552583'
+          }}
+        >
+          <h2 className="text-lg font-semibold mb-3" style={{ color: '#552583' }}>
+            Your Recorded Response:
+          </h2>
           <div 
-            className="w-full p-4 border border-gray-300 rounded-lg bg-gray-50 overflow-y-auto"
-            style={{minHeight: '200px'}}
+            className="w-full p-3 border rounded-lg overflow-y-auto"
+            style={{
+              minHeight: '150px',
+              maxHeight: '200px',
+              backgroundColor: '#FFFFFF',
+              borderColor: '#552583',
+              borderWidth: '2px',
+              fontSize: '0.95rem'
+            }}
           >
-            <p className="text-[#1f1f1f] leading-relaxed whitespace-pre-wrap">
-              {response}
-            </p>
+            <p className="leading-relaxed whitespace-pre-wrap">{response}</p>
           </div>
         </div>
         
-        <div className="bg-white rounded-lg p-6 shadow-md" style={{marginBottom: '40px'}}>
-          <h2 className="text-xl font-semibold text-[#1f1f1f] mb-4">AI Feedback:</h2>
+        {/* AI Feedback */}
+        <div 
+          className="shadow-md" 
+          style={{ 
+            marginBottom: '24px', 
+            backgroundColor: '#FDFCFB', 
+            padding: '16px',
+            borderRadius: '10px',
+            border: '2px solid #552583'
+          }}
+        >
+          <h2 className="text-lg font-semibold mb-3" style={{ color: '#552583' }}>
+            AI Feedback:
+          </h2>
           <div 
-            className="w-full p-4 border border-gray-300 rounded-lg bg-blue-50 overflow-y-auto"
-            style={{minHeight: '200px'}}
+            className="w-full p-3 border rounded-lg overflow-y-auto"
+            style={{
+              minHeight: '150px',
+              maxHeight: '200px',
+              backgroundColor: '#FFFFFF',
+              borderColor: '#FDB927',
+              borderWidth: '2px',
+              fontSize: '0.95rem'
+            }}
           >
-            <p className="text-[#1f1f1f] leading-relaxed whitespace-pre-wrap">
-              {feedback}
-            </p>
+            <p className="leading-relaxed whitespace-pre-wrap">{feedback}</p>
           </div>
         </div>
         
-        <div className="text-center">
+        {/* Buttons */}
+        <div className="text-center" style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+          <button
+            onClick={handleBack}
+            style={{
+              backgroundColor: '#FDB927',
+              color: '#000000',
+              padding: '10px 20px',
+              borderRadius: '8px',
+              fontSize: '0.95rem',
+              fontWeight: '600',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = '#FFC94D'}
+            onMouseLeave={(e) => e.target.style.backgroundColor = '#FDB927'}
+          >
+            Back
+          </button>
           <button
             onClick={() => navigate('/technical')}
-            className="bg-[#2c2c2c] hover:bg-[#444444] text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors duration-200"
+            style={{
+              backgroundColor: '#552583',
+              color: '#FFFFFF',
+              padding: '10px 24px',
+              borderRadius: '8px',
+              fontSize: '0.95rem',
+              fontWeight: '600',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = '#6E3AA9'}
+            onMouseLeave={(e) => e.target.style.backgroundColor = '#552583'}
           >
             Continue to Technical Interview
           </button>
