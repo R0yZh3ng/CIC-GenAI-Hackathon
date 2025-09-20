@@ -186,4 +186,4 @@ score = scoring_engine.calculate_technical_score(evaluation, time_taken)
 The beauty of the modular design is that your program becomes just another component in the pipeline, and all the complex AI evaluation and scoring logic is already built and tested.
 
 **Bottom Line**: Yes, it would work seamlessly with minimal integration effort!
-# Hey - eliljah
+# Hey - eliljah# LeCruiter.AI
